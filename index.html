@@ -1,0 +1,18 @@
+<html>
+        <head>
+                <meta name="viewport" content="width=device-width">
+        </head>
+        <body style="text-align: center; background-color: black">
+                <div id='camera'><img src=out.jpg id='cameraview'></div>
+                <script>
+                        function updateCamera()
+                        {
+                                document.getElementById('cameraview').src="out.jpg?T="+Math.random();
+                                setTimeout(updateCamera,200);
+                        }
+                        setTimeout(function(){
+                            updateCamera();
+                        }, 5*1000);
+                </script>
+        </body>
+</html>

@@ -1,0 +1,68 @@
+<html>
+        <head>
+                <meta name="viewport" content="width=device-width">
+        </head>
+        <body style="text-align: center; background-color: black">
+                <img src=http://c1/babycam/out.jpg id='cameraview2'>
+                <img src=http://c2/babycam/out.jpg id='cameraview1'>
+                <script>
+						var iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+						var isHorizontal=false
+                        function updateCamera()
+                        {
+							if(isHorizontal)
+							{
+                                document.getElementById('cameraview2').src="http://c2/babycam/out.jpg?T="+Math.random();
+                                document.getElementById('cameraview1').src="http://c1/babycam/out.jpg?T="+Math.random();
+							}
+							else
+							{
+                                document.getElementById('cameraview1').src="http://c2/babycam/out.jpg?T="+Math.random();
+                                document.getElementById('cameraview2').src="http://c1/babycam/out.jpg?T="+Math.random();
+							}
+                            setTimeout(updateCamera,200);
+                        }
+						function doOnOrientationChange() {
+							switch(window.orientation) {  
+							  case -90: case 90:
+							  	isHorizontal=true;
+								//alert(document.documentElement.clientWidth)
+							  	//var resFactor=(document.documentElement.clientWidth/(640*2))
+								//if(document.documentElement.clientWidth < 1000)
+								var iPhone = !!navigator.platform && /iPhone/.test(navigator.platform);
+								if(iPhone)
+									resFactor=0.61;
+								else
+									resFactor=0.784;
+								newW=640*resFactor;
+								newH=480*resFactor;
+							  	document.getElementById('cameraview1').style.width=newW;
+							  	document.getElementById('cameraview1').style.height=newH;
+							  	document.getElementById('cameraview2').style.width=newW;
+							  	document.getElementById('cameraview2').style.height=newH;
+								/*
+							  	document.getElementById('cameraview1').style.width="320";
+							  	document.getElementById('cameraview1').style.height="240";
+							  	document.getElementById('cameraview2').style.width="320";
+							  	document.getElementById('cameraview2').style.height="240";
+								*/
+								break; 
+							  default:
+							  	isHorizontal=false;
+							  	document.getElementById('cameraview1').style.width="640";
+							  	document.getElementById('cameraview1').style.height="480";
+							  	document.getElementById('cameraview2').style.width="640";
+							  	document.getElementById('cameraview2').style.height="480";
+								//alert('portrait');
+								break; 
+							}
+						}
+						setTimeout(function(){
+                        	updateCamera();
+						}, 5*1000);
+						window.addEventListener('orientationchange', doOnOrientationChange);	
+						// Initial execution if needed
+						doOnOrientationChange();
+                </script>
+        </body>
+</html>

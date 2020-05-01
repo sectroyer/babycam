@@ -1,0 +1,92 @@
+--- ./camera3.py	(original)
++++ ./camera3.py	(refactored)
+@@ -73,9 +73,9 @@
+         while len(data) > 0 and len(packet) < 80000:
+             data=sock.recv(BUFFER_SIZE)
+             packet+=data
+-        print "\nreceived (packet_size: ", str(packet_size), ") data: ", binascii.hexlify(packet) 
++        print("\nreceived (packet_size: ", str(packet_size), ") data: ", binascii.hexlify(packet)) 
+         now = datetime.now()
+-        print now.strftime("%d/%m/%Y %H:%M:%S")
++        print(now.strftime("%d/%m/%Y %H:%M:%S"))
+         #sys.exit(-1)
+     cur_num=0
+     while current_size < packet_size and cur_num < num_max:
+@@ -95,42 +95,42 @@
+ 
+ #data = s.recv(BUFFER_SIZE)
+ data=recvCameraPacket(s)
+-print "received data: ", binascii.hexlify(data) 
++print("received data: ", binascii.hexlify(data)) 
+ xxTeaRequest=binascii.hexlify(data)[-32:]
+-print "xxTeaRequest: ", xxTeaRequest
++print("xxTeaRequest: ", xxTeaRequest)
+ 
+ xxTeaResponse = binascii.hexlify(xxtea.decrypt(xxTeaRequest,key))
+-print "xxTeaResponse: ", xxTeaResponse
++print("xxTeaResponse: ", xxTeaResponse)
+ 
+ C_RES=binascii.unhexlify(A_C_RESPONSE+xxTeaResponse)
+ 
+-print "generated res: ", binascii.hexlify(C_RES)
++print("generated res: ", binascii.hexlify(C_RES))
+ s.send(C_RES)
+ #data = s.recv(BUFFER_SIZE)
+ data=recvCameraPacket(s)
+-print "received data: ", binascii.hexlify(data) 
++print("received data: ", binascii.hexlify(data)) 
+ 
+ SIZE_REQ=binascii.unhexlify(A_RES_LOW_REQ)
+ s.send(SIZE_REQ)
+-print "generated req: ", binascii.hexlify(SIZE_REQ)
+-
+-data=recvCameraPacket(s)
+-print "received data: ", binascii.hexlify(data) 
++print("generated req: ", binascii.hexlify(SIZE_REQ))
++
++data=recvCameraPacket(s)
++print("received data: ", binascii.hexlify(data)) 
+ 
+ SIZE_REQ=binascii.unhexlify(A_RES_HIGH_REQ)
+ s.send(SIZE_REQ)
+-print "generated req: ", binascii.hexlify(SIZE_REQ)
+-
+-data=recvCameraPacket(s)
+-print "received data: ", binascii.hexlify(data) 
++print("generated req: ", binascii.hexlify(SIZE_REQ))
++
++data=recvCameraPacket(s)
++print("received data: ", binascii.hexlify(data)) 
+ 
+ V_REQ=binascii.unhexlify(A_V_REQUEST)
+ s.send(V_REQ)
+-print "generated req: ", binascii.hexlify(V_REQ)
++print("generated req: ", binascii.hexlify(V_REQ))
+ 
+ #data = s.recv(BUFFER_SIZE)
+ data=recvCameraPacket(s)
+-print "received data: ", binascii.hexlify(data) 
++print("received data: ", binascii.hexlify(data)) 
+ 
+ packet_count=0
+ small_packet_count=0
+@@ -138,8 +138,8 @@
+ ImageFile.LOAD_TRUNCATED_IMAGES = True
+ now = datetime.now()
+ dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+-print "\n", dt_string
+-print "Starting camera capture..."
++print("\n", dt_string)
++print("Starting camera capture...")
+ while True:
+     #data = s.recv(HEADER_SIZE)
+     data=recvCameraPacket(s)
+@@ -147,7 +147,7 @@
+     if len(data) < (JFIF_POS+4):
+         small_packet_count+=1
+         if small_packet_count > 100:
+-            print "\nToo many small packets. Exiting..."
++            print("\nToo many small packets. Exiting...")
+             sys.exit(-1)
+         continue
+     small_packet_count=0
