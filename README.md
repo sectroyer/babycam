@@ -2,7 +2,13 @@
 OpenSource implementation of iBaby M2/ M3/ M3S network protocol. It can also work on other cameras. You can use in two ways either by replacing orignal application on camera itself or by impersonating clients.
 
 ## Client application impersonation
-There are two clients (camera2.py and camera3.py) for both Python 2 and Python 3. Once client is executed it connects to camera and starts dumping frames to out.jpg file which for example can be hosted via regular HTTP server. I attach very simple example of HTML file that refreshes image and can work on any device. To start you simply edit the source of camera2/camera3 and start it like this:
+There are two clients (camera2.py and camera3.py) for both Python 2 and Python 3. For both of them you need special version of xxtea library. Regular one uses PKCS padding which is incompatible with packets sent by camera. You can install it by running this command:
+
+```
+pip install xxtea==0.1.5
+```
+
+After that once client is executed it connects to camera and starts dumping frames to out.jpg file which for example can be hosted via regular HTTP server. I attach very simple example of HTML file that refreshes image and can work on any device. To start you simply edit the source of camera2/camera3 and start it like this:
 ```
 ./camera3.py
 ```
